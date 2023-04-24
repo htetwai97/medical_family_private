@@ -26,6 +26,7 @@ import 'package:medical_family_app/network/data_agents/data_agent.dart';
 import 'package:medical_family_app/network/data_agents/data_agent_impl.dart';
 import 'package:medical_family_app/network/data_agents/http_data_agent_impl.dart';
 import 'package:medical_family_app/network/responses/get_all_items_response.dart';
+import 'package:medical_family_app/network/responses/get_colors_for_family_arrow_response.dart';
 import 'package:medical_family_app/network/responses/get_item_by_id_response.dart';
 import 'package:medical_family_app/network/responses/get_itemlist_by_cat_and_subcat_response.dart';
 import 'package:medical_family_app/network/responses/get_items_and_subcategories_by_category_response.dart';
@@ -341,5 +342,11 @@ class MedicalWorldRepoModelImpl extends MedicalWorldRepoModel {
   Future<PostEmailSuccessResponse> postEmailBodyFormData(FormData formData) {
     return dataAgent.postEmailBodyFormData(
         MULTIPART_FORM_DATA, APPLICATIONJSON, formData);
+  }
+
+  @override
+  Future<GetColorsForFamilyArrowResponse> getColorsForFamilyArrow(
+      String itemName) {
+    return httpDataAgent.getColorsForFamilyArrow(itemName);
   }
 }

@@ -111,12 +111,14 @@ class DataAgentImpl extends DataAgent {
   }
 
   @override
-  Future<PostEmailSuccessResponse> postEmailBody(String contentType, String accept, SendEmailBodyVO emailBody) {
+  Future<PostEmailSuccessResponse> postEmailBody(
+      String contentType, String accept, SendEmailBodyVO emailBody) {
     return mApi.postEmailBody(contentType, accept, emailBody);
   }
 
   @override
-  Future<PostEmailSuccessResponse> postEmailBodyFormData(String contentType, String accept, FormData formData) {
-   return mApi.postEmailBodyFormData(contentType, accept, formData);
+  Future<PostEmailSuccessResponse> postEmailBodyFormData(
+      String contentType, String accept, FormData formData) {
+    return mApi.postEmailBodyFormData(contentType, accept, formData);
   }
 }

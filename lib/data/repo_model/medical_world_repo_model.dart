@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:medical_family_app/data/vo_models/both_order_response_vo.dart';
 import 'package:medical_family_app/data/vo_models/brand_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/cart_item_vo.dart';
+import 'package:medical_family_app/data/vo_models/color_for_family_arrow_vo.dart';
 import 'package:medical_family_app/data/vo_models/color_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/design_by_brand_id_vo.dart';
@@ -20,6 +21,7 @@ import 'package:medical_family_app/data/vo_models/size_vo.dart';
 import 'package:medical_family_app/data/vo_models/township_vo.dart';
 import 'package:medical_family_app/data/vo_models/user_vo.dart';
 import 'package:medical_family_app/network/responses/get_all_items_response.dart';
+import 'package:medical_family_app/network/responses/get_colors_for_family_arrow_response.dart';
 import 'package:medical_family_app/network/responses/get_item_by_id_response.dart';
 import 'package:medical_family_app/network/responses/get_itemlist_by_cat_and_subcat_response.dart';
 import 'package:medical_family_app/network/responses/get_items_and_subcategories_by_category_response.dart';
@@ -44,6 +46,8 @@ abstract class MedicalWorldRepoModel {
   Future<List<ItemDetailVO>> postRelatedItem(
       ItemToPostRelatedItemVO itemToPostRelatedItemVO);
   Future<GenderVO> getGender(String itemName);
+  Future<GetColorsForFamilyArrowResponse> getColorsForFamilyArrow(
+      String itemName);
   Future<FabricVO> getFabric(String itemName, String gender);
   Future<ColorVO> getColor(String itemName, String gender, String fabric);
   Future<SizeVO> getSize(
@@ -98,6 +102,5 @@ abstract class MedicalWorldRepoModel {
   CustomPreOrderItemVO? getCustomOrderItem(String? timeStamp);
   Future<PostEmailSuccessResponse> postEmailBodyRetrofit(
       SendEmailBodyVO emailBody);
-  Future<PostEmailSuccessResponse> postEmailBodyFormData(
-       FormData formData);
+  Future<PostEmailSuccessResponse> postEmailBodyFormData(FormData formData);
 }

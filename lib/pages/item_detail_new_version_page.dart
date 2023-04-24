@@ -532,59 +532,59 @@ class SelectableItemDetailView extends StatelessWidget {
   }
 
   void _colorModifier() {
-    if (itemName == "ar7") {
+    if (itemName == "ar7" || itemName == "4925ar7") {
       color = const Color(0xff9C9679);
-    } else if (itemName == "ar16") {
+    } else if (itemName == "ar16" || itemName == "4925ar16") {
       color = const Color(0xffC79FDC);
-    } else if (itemName == "ar18") {
+    } else if (itemName == "ar18" || itemName == "4925ar18") {
       color = const Color(0xff63A298);
-    } else if (itemName == "ar20") {
+    } else if (itemName == "ar20" || itemName == "4925ar20") {
       color = const Color(0xff264075);
-    } else if (itemName == "ar21") {
+    } else if (itemName == "ar21" || itemName == "4925ar21") {
       color = const Color(0xff000000);
-    } else if (itemName == "ar26") {
+    } else if (itemName == "ar26" || itemName == "4925ar26") {
       color = const Color(0xffBD8091);
-    } else if (itemName == "ar32") {
+    } else if (itemName == "ar32" || itemName == "4925ar32") {
       color = const Color(0xff002D03);
-    } else if (itemName == "ar36") {
+    } else if (itemName == "ar36" || itemName == "4925ar36") {
       color = const Color(0xffC7004C);
-    } else if (itemName == "ar43") {
+    } else if (itemName == "ar43" || itemName == "4925ar43") {
       color = const Color(0xffF3E124);
-    } else if (itemName == "ar44") {
+    } else if (itemName == "ar44" || itemName == "4925ar44") {
       color = const Color(0xff008694);
-    } else if (itemName == "ar48") {
+    } else if (itemName == "ar48" || itemName == "4925ar48") {
       color = const Color(0xff8F803A);
-    } else if (itemName == "ar57") {
+    } else if (itemName == "ar57" || itemName == "4925ar57") {
       color = const Color(0xff490012);
-    } else if (itemName == "ar64") {
+    } else if (itemName == "ar64" || itemName == "4925ar64") {
       color = const Color(0xff00A23B);
-    } else if (itemName == "ar66") {
+    } else if (itemName == "ar66" || itemName == "4925ar66") {
       color = const Color(0xff2A1733);
-    } else if (itemName == "ar67") {
+    } else if (itemName == "ar67" || itemName == "4925ar67") {
       color = const Color(0xffDA99CC);
-    } else if (itemName == "ar70") {
+    } else if (itemName == "ar70" || itemName == "4925ar70") {
       color = const Color(0xffBAA54D);
-    } else if (itemName == "ar75") {
+    } else if (itemName == "ar75" || itemName == "4925ar75") {
       color = const Color(0xff704289);
-    } else if (itemName == "ar77") {
+    } else if (itemName == "ar77" || itemName == "4925ar77") {
       color = const Color(0xff0E6833);
-    } else if (itemName == "ar79") {
+    } else if (itemName == "ar79" || itemName == "4925ar79") {
       color = const Color(0xffAC4B62);
-    } else if (itemName == "ar81") {
+    } else if (itemName == "ar81" || itemName == "4925ar81") {
       color = const Color(0xff70691E);
-    } else if (itemName == "ar82") {
+    } else if (itemName == "ar82" || itemName == "4925ar82") {
       color = const Color(0xff4D6DAD);
-    } else if (itemName == "ar88") {
+    } else if (itemName == "ar88" || itemName == "4925ar88") {
       color = const Color(0xff0FB782);
-    } else if (itemName == "ar90") {
+    } else if (itemName == "ar90" || itemName == "4925ar90") {
       color = const Color(0xff7F7E73);
-    } else if (itemName == "ar96") {
+    } else if (itemName == "ar96" || itemName == "4925ar96") {
       color = const Color(0xff003C55);
-    } else if (itemName == "ar98") {
+    } else if (itemName == "ar98" || itemName == "4925ar98") {
       color = const Color(0xff026D80);
-    } else if (itemName == "ar101") {
+    } else if (itemName == "ar101" || itemName == "4925ar101") {
       color = const Color(0xff00A7B6);
-    } else if (itemName == "ar106") {
+    } else if (itemName == "ar106" || itemName == "4925ar106") {
       color = const Color(0xff4C4C4C);
     } else {
       color = Colors.transparent;

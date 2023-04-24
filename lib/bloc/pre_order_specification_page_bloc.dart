@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:medical_family_app/constants/texts/texts.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model_impl.dart';
+import 'package:medical_family_app/data/vo_models/color_for_family_arrow_vo.dart';
 import 'package:medical_family_app/data/vo_models/counting_unit_id_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/item_vo.dart';
@@ -23,13 +24,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   List<dynamic>? colors = [];
   List<dynamic>? sizes = [];
   List<dynamic>? firstColors = [];
-  List<dynamic>? firstColorsWithData = [
-    "Blue",
-    "Green",
-    "Purple",
-    "Yellow",
-    "Pink"
-  ];
+  List<ColorForFamilyArrowVO?>? colorObjectList = [];
   List<ItemVO?>? itemDemoList = [];
   ItemVO? itemDemoVO;
   bool isChecked = false;
@@ -230,8 +225,20 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     isSelectedColor = false;
     isSelectedSize = false;
     firstColors = [];
-    firstColors = firstColorsWithData;
+    isApiLoad = true;
     _notifySafely();
+    model.getColorsForFamilyArrow(selectedFabric ?? "").then((value) {
+      colorObjectList = value.colorObjects;
+          // ?.where((element) => element!.colorName!.startsWith("ar"))
+          // .toList();
+      firstColors = colorObjectList
+          ?.map((e) => e?.colorDescription)
+          .toList()
+          .toSet()
+          .toList();
+      isApiLoad = false;
+      _notifySafely();
+    });
 
     /// reset
     colors = [];
@@ -261,67 +268,13 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     isApiLoad = true;
     _notifySafely();
     if (selectedFabric == "familyarrow") {
-      model
-          .getColor(
-              selectedDesign ?? "", selectedGender ?? "", selectedFabric ?? "")
-          .then((value) {
-        if (selectedFirstColor == "Blue") {
-          colors = value.colors
-              ?.where((element) =>
-                  element == "ar20" ||
-                  element == "ar98" ||
-                  element == "ar44" ||
-                  element == "ar82" ||
-                  element == "ar101" ||
-                  element == "ar96")
-              .toList();
-          isApiLoad = false;
-          _notifySafely();
-        } else if (selectedFirstColor == "Green") {
-          colors = value.colors
-              ?.where((element) =>
-                  element == "ar32" ||
-                  element == "ar64" ||
-                  element == "ar77" ||
-                  element == "ar88")
-              .toList();
-          isApiLoad = false;
-          _notifySafely();
-        } else if (selectedFirstColor == "Purple") {
-          colors = value.colors
-              ?.where((element) =>
-                  element == "ar21" || element == "ar66" || element == "ar75")
-              .toList();
-          isApiLoad = false;
-          _notifySafely();
-        } else if (selectedFirstColor == "Yellow") {
-          colors = value.colors
-              ?.where((element) =>
-                  element == "ar18" ||
-                  element == "ar7" ||
-                  element == "ar43" ||
-                  element == "ar81" ||
-                  element == "ar48" ||
-                  element == "ar90" ||
-                  element == "ar70" ||
-                  element == "ar106")
-              .toList();
-          isApiLoad = false;
-          _notifySafely();
-        } else if (selectedFirstColor == "Pink") {
-          colors = value.colors
-              ?.where((element) =>
-                  element == "ar16" ||
-                  element == "ar26" ||
-                  element == "ar36" ||
-                  element == "ar57" ||
-                  element == "ar67" ||
-                  element == "ar79")
-              .toList();
-          isApiLoad = false;
-          _notifySafely();
-        }
-      });
+      List<ColorForFamilyArrowVO?>? list = colorObjectList
+          ?.where((element) => element?.colorDescription == selectedFirstColor)
+          .toList();
+
+      colors = list?.map((e) => e?.colorName).toList();
+      isApiLoad = false;
+      _notifySafely();
     } else {
       colors = countingUnitsByGenderAndFabric
           ?.map((e) => e?.colorName)

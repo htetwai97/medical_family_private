@@ -9,6 +9,7 @@ import 'package:medical_family_app/data/vo_models/gender_vo.dart';
 import 'package:medical_family_app/data/vo_models/item_vo.dart';
 import 'package:medical_family_app/data/vo_models/size_vo.dart';
 import 'package:medical_family_app/network/api_constants.dart';
+import 'package:medical_family_app/network/responses/get_colors_for_family_arrow_response.dart';
 import 'package:medical_family_app/network/responses/get_item_by_id_response.dart';
 import 'package:medical_family_app/network/responses/get_itemlist_by_cat_and_subcat_response.dart';
 import 'package:medical_family_app/network/responses/get_items_and_subcategories_by_category_response.dart';
@@ -100,6 +101,16 @@ class HttpDataAgentImpl {
         .get(Uri.parse("$BASE_URL$END_POINT_ECOMMERCE_ORDER$itemName"));
     if (response.statusCode == 200) {
       return GenderVO.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  Future<GetColorsForFamilyArrowResponse> getColorsForFamilyArrow(String itemName) async {
+    final response = await http
+        .get(Uri.parse("$BASE_URL$END_POINT_ECOMMERCE_ORDER$itemName"));
+    if (response.statusCode == 200) {
+      return GetColorsForFamilyArrowResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -208,5 +219,4 @@ class HttpDataAgentImpl {
       throw Exception('Failed to load response');
     }
   }
-
 }
