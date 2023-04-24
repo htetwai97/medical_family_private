@@ -119,6 +119,7 @@ class InStockOrderSpecificationPage extends StatelessWidget {
                             onTap: (index) {
                               bloc.onTapColor(index);
                             },
+                            isVisibleCircle: true,
                             properties: bloc.colors ?? [],
                             isSelectedSomething: bloc.isSelectedColor,
                             warning: "Fabric is required to choose",

@@ -9,9 +9,10 @@ import 'package:medical_family_app/constants/colors/colors.dart';
 import 'package:medical_family_app/constants/scale/font_sizes.dart';
 import 'package:medical_family_app/constants/scale/scale_dimension.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
-import 'package:medical_family_app/data/vo_models/item_demo_vo.dart';
+import 'package:medical_family_app/data/vo_models/item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_vo.dart';
+import 'package:medical_family_app/network/api_constants.dart';
 import 'package:medical_family_app/pages/home_page.dart';
 import 'package:medical_family_app/pages/item_detail_new_version_page.dart';
 import 'package:medical_family_app/pages/my_cart_page.dart';
@@ -25,7 +26,7 @@ import 'package:provider/provider.dart';
 class PreOrderSpecificationPage extends StatelessWidget {
   PreOrderVO? brand;
   List<dynamic>? designList;
-  List<ItemDemoVO?>? itemDemos;
+  List<ItemVO?>? itemDemos;
   PreOrderSpecificationPage({
     Key? key,
     required this.designList,
@@ -77,7 +78,7 @@ class PreOrderSpecificationPage extends StatelessWidget {
                         SizedBox(height: scaleWidth(context) / 18),
                         BrandAndPriceRangeForSpecifiedView(
                           brand: brand?.id == 1
-                              ? "Family Hospital"
+                              ? "Family Uniform"
                               : brand?.id == 2
                                   ? "Branded"
                                   : "Eco Family",
@@ -331,6 +332,7 @@ class OriginalChooseSectionView extends StatelessWidget {
           ),
         ),
         SizedBox(height: scaleWidth(context) / 20),
+        const DesignImageView(),
         TitleAndSeeMoreView(
           title: "Gender",
         ),
@@ -374,10 +376,35 @@ class OriginalChooseSectionView extends StatelessWidget {
         ),
         SizedBox(height: scaleWidth(context) / 20),
         Consumer<PreOrderSpecificationPageBloc>(
+          builder: (context, bloc, child) => Visibility(
+            visible: bloc.showFirstColor,
+            child: ItemPropertyListView(
+              onTap: (index) {
+                bloc.onTapFirstColor(index);
+              },
+              isVisibleCircle: false,
+              properties: bloc.firstColors ?? [],
+              isSelectedSomething: bloc.isSelectedFirstColor,
+              warning: "Fabric is required to choose",
+              selectedIndex: bloc.selectedFirstColorIndex,
+              onTapProperty: (firstColor) {
+                bloc.onChooseFirstColor(firstColor);
+              },
+            ),
+          ),
+        ),
+        Consumer<PreOrderSpecificationPageBloc>(
+          builder: (context, bloc, child) => Visibility(
+            visible: bloc.showFirstColor,
+            child: SizedBox(height: scaleWidth(context) / 20),
+          ),
+        ),
+        Consumer<PreOrderSpecificationPageBloc>(
           builder: (context, bloc, child) => ItemPropertyListView(
             onTap: (index) {
               bloc.onTapColor(index);
             },
+            isVisibleCircle: true,
             properties: bloc.colors ?? [],
             isSelectedSomething: bloc.isSelectedColor,
             warning: "Fabric is required to choose",
@@ -407,6 +434,43 @@ class OriginalChooseSectionView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DesignImageView extends StatelessWidget {
+  const DesignImageView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<PreOrderSpecificationPageBloc>(
+      builder: (context, bloc, child) => Align(
+        alignment: Alignment.center,
+        child: Visibility(
+          visible: bloc.photoUrl != null,
+          child: Container(
+            margin: EdgeInsets.only(bottom: scaleWidth(context) / 20),
+            height: scaleWidth(context) / 2.8,
+            width: scaleWidth(context) / 2.8,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: FadeInImage(
+                  fit: BoxFit.cover,
+                  imageErrorBuilder: (context, obj, st) {
+                    return errorImage();
+                  },
+                  placeholder:
+                      const AssetImage("assets/images/place_holder_asset.jpg"),
+                  image: NetworkImage("$ITEM_IMAGE_BASE_URL${bloc.photoUrl}")),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -541,7 +605,7 @@ class PreOrderListBeforeCheckOutView extends StatelessWidget {
                 DetailVoucherRowView(
                   value: preOrderList?[index]?.quantity ?? "",
                   title: "Quantity",
-                  rowColor: const Color.fromRGBO(245, 245, 245, 1),
+                  // rowColor: const Color.fromRGBO(245, 245, 245, 1),
                 ),
                 DetailVoucherRowView(
                   value: preOrderList?[index]?.price ?? "",
@@ -550,7 +614,7 @@ class PreOrderListBeforeCheckOutView extends StatelessWidget {
                 DetailVoucherRowView(
                   value: preOrderList?[index]?.total ?? "",
                   title: "Total",
-                  rowColor: const Color.fromRGBO(245, 245, 245, 1),
+                  // rowColor: const Color.fromRGBO(245, 245, 245, 1),
                 ),
               ],
             ),

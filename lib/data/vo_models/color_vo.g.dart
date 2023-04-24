@@ -7,7 +7,7 @@ part of 'color_vo.dart';
 // **************************************************************************
 
 ColorVO _$ColorVOFromJson(Map<String, dynamic> json) => ColorVO(
-      colors: json['colour'] as Map<String, dynamic>?,
+      colors: json['colour'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$ColorVOToJson(ColorVO instance) => <String, dynamic>{

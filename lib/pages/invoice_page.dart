@@ -76,21 +76,21 @@ class InvoicePage extends StatelessWidget {
                                       .response?.order?.attachFlag ==
                                   0)
                               ? OrderListView(
-                                  rowOneColor: Colors.black12,
-                                  rowTwoColor:
-                                      const Color.fromRGBO(0, 174, 239, 0.3),
-                                  rowThreeColor: Colors.black12,
-                                  rowFourColor:
-                                      const Color.fromRGBO(0, 174, 239, 0.3),
-                                  rowFiveColor: Colors.black12,
-                                  rowSixColor:
-                                      const Color.fromRGBO(0, 174, 239, 0.3),
+                                  // rowOneColor: Colors.black12,
+                                  // rowTwoColor:
+                                  //     const Color.fromRGBO(0, 174, 239, 0.3),
+                                  // rowThreeColor: Colors.black12,
+                                  // rowFourColor:
+                                  //     const Color.fromRGBO(0, 174, 239, 0.3),
+                                  // rowFiveColor: Colors.black12,
+                                  // rowSixColor:
+                                  //     const Color.fromRGBO(0, 174, 239, 0.3),
                                   response: bloc.response,
                                 )
                               : AttachOrderItemListView(
-                                  lineOneColor: Colors.black12,
-                                  lineTwoColor:
-                                      const Color.fromRGBO(0, 174, 239, 0.3),
+                                  // lineOneColor: Colors.black12,
+                                  // lineTwoColor:
+                                  //     const Color.fromRGBO(0, 174, 239, 0.3),
                                   padding: 2,
                                   response: bloc.response,
                                 ),

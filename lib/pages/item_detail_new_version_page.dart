@@ -132,6 +132,7 @@ class ItemDetailNewVersionPage extends StatelessWidget {
                                 onTap: (index) {
                                   bloc.onTapColor(index);
                                 },
+                                isVisibleCircle: true,
                                 selectedIndex: bloc.selectedColorIndex,
                                 properties: bloc.colorList ?? [],
                                 isSelectedSomething: bloc.isSelectedColor,
@@ -443,6 +444,7 @@ class ItemPropertyListView extends StatefulWidget {
   bool isSelectedSomething;
   int selectedIndex;
   String warning;
+  bool isVisibleCircle;
   ItemPropertyListView({
     super.key,
     required this.properties,
@@ -451,6 +453,7 @@ class ItemPropertyListView extends StatefulWidget {
     required this.onTap,
     this.warning = "",
     this.selectedIndex = -1,
+    this.isVisibleCircle = false,
   });
 
   @override
@@ -461,10 +464,13 @@ class _ItemPropertyListViewState extends State<ItemPropertyListView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: scaleWidth(context) / 10,
+      height: (widget.isVisibleCircle)
+          ? scaleWidth(context) / 5
+          : scaleWidth(context) / 8,
       child: (widget.properties.length != 0 && widget.properties.isNotEmpty)
           ? ListView.separated(
               itemBuilder: (context, index) => SelectableItemDetailView(
+                isVisibleCircle: widget.isVisibleCircle,
                 isSelectedFromBloc: widget.isSelectedSomething,
                 itemName: widget.properties[index],
                 isSelected: (widget.selectedIndex == index),
@@ -502,16 +508,18 @@ class SelectableItemDetailView extends StatelessWidget {
   bool isSelected;
   bool isSelectedFromBloc;
   String displayName = "";
+  bool isVisibleCircle;
+  Color? color;
   SelectableItemDetailView({
     super.key,
     required this.itemName,
     required this.onTap,
     this.isSelected = false,
     this.isSelectedFromBloc = false,
+    this.isVisibleCircle = false,
   });
 
-  @override
-  Widget build(BuildContext context) {
+  void _nameModifier() {
     if (itemName == "f") {
       displayName = "Female";
     } else if (itemName == "m") {
@@ -521,40 +529,128 @@ class SelectableItemDetailView extends StatelessWidget {
     } else {
       displayName = itemName;
     }
+  }
+
+  void _colorModifier() {
+    if (itemName == "ar7") {
+      color = const Color(0xff9C9679);
+    } else if (itemName == "ar16") {
+      color = const Color(0xffC79FDC);
+    } else if (itemName == "ar18") {
+      color = const Color(0xff63A298);
+    } else if (itemName == "ar20") {
+      color = const Color(0xff264075);
+    } else if (itemName == "ar21") {
+      color = const Color(0xff000000);
+    } else if (itemName == "ar26") {
+      color = const Color(0xffBD8091);
+    } else if (itemName == "ar32") {
+      color = const Color(0xff002D03);
+    } else if (itemName == "ar36") {
+      color = const Color(0xffC7004C);
+    } else if (itemName == "ar43") {
+      color = const Color(0xffF3E124);
+    } else if (itemName == "ar44") {
+      color = const Color(0xff008694);
+    } else if (itemName == "ar48") {
+      color = const Color(0xff8F803A);
+    } else if (itemName == "ar57") {
+      color = const Color(0xff490012);
+    } else if (itemName == "ar64") {
+      color = const Color(0xff00A23B);
+    } else if (itemName == "ar66") {
+      color = const Color(0xff2A1733);
+    } else if (itemName == "ar67") {
+      color = const Color(0xffDA99CC);
+    } else if (itemName == "ar70") {
+      color = const Color(0xffBAA54D);
+    } else if (itemName == "ar75") {
+      color = const Color(0xff704289);
+    } else if (itemName == "ar77") {
+      color = const Color(0xff0E6833);
+    } else if (itemName == "ar79") {
+      color = const Color(0xffAC4B62);
+    } else if (itemName == "ar81") {
+      color = const Color(0xff70691E);
+    } else if (itemName == "ar82") {
+      color = const Color(0xff4D6DAD);
+    } else if (itemName == "ar88") {
+      color = const Color(0xff0FB782);
+    } else if (itemName == "ar90") {
+      color = const Color(0xff7F7E73);
+    } else if (itemName == "ar96") {
+      color = const Color(0xff003C55);
+    } else if (itemName == "ar98") {
+      color = const Color(0xff026D80);
+    } else if (itemName == "ar101") {
+      color = const Color(0xff00A7B6);
+    } else if (itemName == "ar106") {
+      color = const Color(0xff4C4C4C);
+    } else {
+      color = Colors.transparent;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _nameModifier();
+    _colorModifier();
     return GestureDetector(
       onTap: () {
         onTap(itemName);
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: scaleWidth(context) / 100,
-        ),
-        decoration: BoxDecoration(
-            color: (isSelected && isSelectedFromBloc)
-                ? APP_THEME_COLOR
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0, 0),
-                spreadRadius: 1,
-                blurRadius: 2,
-                blurStyle: BlurStyle.outer,
-              )
-            ]),
-        child: Center(
-          child: Text(
-            displayName,
-            style: TextStyle(
-              color: (isSelected && isSelectedFromBloc)
-                  ? Colors.white
-                  : Colors.black54,
-              fontWeight: FontWeight.w500,
-              fontSize: FONT_MEDIUM - 2,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Visibility(
+            visible: isVisibleCircle,
+            child: Container(
+              width: scaleWidth(context) / 17,
+              height: scaleWidth(context) / 17,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
             ),
           ),
-        ),
+          Visibility(
+            visible: isVisibleCircle,
+            child: const Spacer(),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: scaleWidth(context) / 100,
+              vertical: scaleWidth(context) / 30,
+            ),
+            decoration: BoxDecoration(
+              color: (isSelected && isSelectedFromBloc)
+                  ? APP_THEME_COLOR
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0, 0),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                displayName,
+                style: TextStyle(
+                  color: (isSelected && isSelectedFromBloc)
+                      ? Colors.white
+                      : Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  fontSize: FONT_MEDIUM - 2,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

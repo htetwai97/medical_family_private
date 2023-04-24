@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model_impl.dart';
-import 'package:medical_family_app/data/vo_models/item_demo_vo.dart';
+import 'package:medical_family_app/data/vo_models/item_vo.dart';
 
 class PreOrderBloc extends ChangeNotifier {
   /// Bloc state
@@ -13,12 +13,12 @@ class PreOrderBloc extends ChangeNotifier {
   /// App State
   bool isLoading = false;
   bool isApiLoad = false;
-  List<ItemDemoVO?>? itemDemos;
+  List<ItemVO?>? itemDemos;
 
   PreOrderBloc() {
     _showLoading();
     model.getAllItems().then((value) {
-      itemDemos = value.data;
+      itemDemos = value.items;
       _notifySafely();
       _hideLoading();
     });

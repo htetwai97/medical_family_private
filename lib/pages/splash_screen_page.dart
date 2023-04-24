@@ -51,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   designListTwo != null &&
                   designListTwo!.isNotEmpty &&
                   designListThree != null &&
-                  designListThree!.isNotEmpty) {
+                  designListThree!.isNotEmpty
+              ) {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

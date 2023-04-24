@@ -1,9 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'color_vo.g.dart';
+
 @JsonSerializable()
-class ColorVO{
+class ColorVO {
   @JsonKey(name: "colour")
-  Map<String,dynamic>? colors;
+
+  ///Map<String,dynamic>? colors;
+  List<dynamic>? colors;
 
   ColorVO({this.colors});
 

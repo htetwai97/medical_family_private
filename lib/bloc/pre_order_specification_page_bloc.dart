@@ -5,7 +5,7 @@ import 'package:medical_family_app/data/repo_model/medical_world_repo_model.dart
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model_impl.dart';
 import 'package:medical_family_app/data/vo_models/counting_unit_id_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
-import 'package:medical_family_app/data/vo_models/item_demo_vo.dart';
+import 'package:medical_family_app/data/vo_models/item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_item_vo.dart';
 
 class PreOrderSpecificationPageBloc extends ChangeNotifier {
@@ -22,10 +22,19 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   List<dynamic>? fabrics = [];
   List<dynamic>? colors = [];
   List<dynamic>? sizes = [];
-  List<ItemDemoVO?>? itemDemoList = [];
-  ItemDemoVO? itemDemoVO;
+  List<dynamic>? firstColors = [];
+  List<dynamic>? firstColorsWithData = [
+    "Blue",
+    "Green",
+    "Purple",
+    "Yellow",
+    "Pink"
+  ];
+  List<ItemVO?>? itemDemoList = [];
+  ItemVO? itemDemoVO;
   bool isChecked = false;
   bool isApiLoad = false;
+  bool showFirstColor = true;
 
   /// to filter by login user
   String? userId;
@@ -34,11 +43,13 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   String? selectedDesign;
   String? selectedGender;
   String? selectedFabric;
+  String? selectedFirstColor;
   String? selectedColor;
   String? selectedSize;
   String? quantity;
   String? price;
   String? description;
+  String? photoUrl;
   File? file;
   List<PreOrderItemVO?>? preOrderList;
   List<CustomPreOrderItemVO?>? customPreOrderList;
@@ -54,6 +65,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   bool isSelectedDesign = false;
   bool isSelectedGender = false;
   bool isSelectedFabric = false;
+  bool isSelectedFirstColor = false;
   bool isSelectedColor = false;
   bool isSelectedSize = false;
 
@@ -61,6 +73,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   int selectedDesignIndex = -1;
   int selectedGenderIndex = -1;
   int selectedFabricIndex = -1;
+  int selectedFirstColorIndex = -1;
   int selectedColorIndex = -1;
   int selectedSizeIndex = -1;
 
@@ -73,7 +86,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   bool autoFocusDescription = false;
 
   PreOrderSpecificationPageBloc(
-      List<dynamic>? designList, List<ItemDemoVO?>? itemDemos) {
+      List<dynamic>? designList, List<ItemVO?>? itemDemos) {
     _showLoading();
 
     model.getUserInfoString(USER_ID).then((userId) {
@@ -103,6 +116,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     isSelectedDesign = true;
     isSelectedGender = false;
     isSelectedFabric = false;
+    isSelectedFirstColor = false;
     isSelectedColor = false;
     isSelectedSize = false;
     genders = [];
@@ -110,12 +124,13 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
 
     /// reset
 
-    List<ItemDemoVO?>? testList = itemDemoList
+    List<ItemVO?>? testList = itemDemoList
         ?.where((element) => element?.itemName == selectedDesign)
         .toList();
     if (testList != null && testList.isNotEmpty) {
       testList.take(1);
       itemDemoVO = testList.elementAt(0);
+      photoUrl = itemDemoVO?.photoPath;
       isApiLoad = true;
       _notifySafely();
       model.getItemById(itemDemoVO?.id?.toString() ?? "").then((response) {
@@ -128,16 +143,21 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
         isApiLoad = false;
         _notifySafely();
       });
+    } else {
+      photoUrl = null;
+      _notifySafely();
     }
 
     /// reset
     fabrics = [];
+    firstColors = [];
     colors = [];
     sizes = [];
 
     /// reset
     selectedGender = null;
     selectedFabric = null;
+    selectedFirstColor = null;
     selectedColor = null;
     selectedSize = null;
 
@@ -153,6 +173,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     selectedGender = gender;
     isSelectedGender = true;
     isSelectedFabric = false;
+    isSelectedFirstColor = false;
     isSelectedColor = false;
     isSelectedSize = false;
     fabrics = [];
@@ -170,11 +191,13 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
         .toList();
 
     /// reset
+    firstColors = [];
     colors = [];
     sizes = [];
 
     /// reset
     selectedFabric = null;
+    selectedFirstColor = null;
     selectedColor = null;
     selectedSize = null;
 
@@ -189,21 +212,125 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   void onChooseFabric(String? fabric) {
     selectedFabric = fabric;
     isSelectedFabric = true;
+    _notifySafely();
+    if (selectedFabric == "familyarrow") {
+      showFirstColor = true;
+      _notifySafely();
+      onChooseFabricNew();
+    } else {
+      showFirstColor = false;
+      _notifySafely();
+      onChooseFabricNew();
+      onChooseFirstColor("");
+    }
+  }
+
+  void onChooseFabricNew() {
+    isSelectedFirstColor = false;
+    isSelectedColor = false;
+    isSelectedSize = false;
+    firstColors = [];
+    firstColors = firstColorsWithData;
+    _notifySafely();
+
+    /// reset
+    colors = [];
+    sizes = [];
+
+    /// reset
+    selectedFirstColor = null;
+    selectedColor = null;
+    selectedSize = null;
+    selectedCountingUnits = null;
+    selectedCountingUnit = null;
+    price = null;
+    _notifySafely();
+    _allowAddButton();
+  }
+
+  void onChooseFirstColor(String? firstColor) {
+    selectedFirstColor = firstColor;
+    isSelectedFirstColor = true;
     isSelectedColor = false;
     isSelectedSize = false;
     colors = [];
     _notifySafely();
-
-    /// reset
-
     countingUnitsByGenderAndFabric = countingUnitsByGender
-        ?.where((element) => element?.fabricName == fabric)
+        ?.where((element) => element?.fabricName == selectedFabric)
         .toList();
-    colors = countingUnitsByGenderAndFabric
-        ?.map((e) => e?.colorName)
-        .toList()
-        .toSet()
-        .toList();
+    isApiLoad = true;
+    _notifySafely();
+    if (selectedFabric == "familyarrow") {
+      model
+          .getColor(
+              selectedDesign ?? "", selectedGender ?? "", selectedFabric ?? "")
+          .then((value) {
+        if (selectedFirstColor == "Blue") {
+          colors = value.colors
+              ?.where((element) =>
+                  element == "ar20" ||
+                  element == "ar98" ||
+                  element == "ar44" ||
+                  element == "ar82" ||
+                  element == "ar101" ||
+                  element == "ar96")
+              .toList();
+          isApiLoad = false;
+          _notifySafely();
+        } else if (selectedFirstColor == "Green") {
+          colors = value.colors
+              ?.where((element) =>
+                  element == "ar32" ||
+                  element == "ar64" ||
+                  element == "ar77" ||
+                  element == "ar88")
+              .toList();
+          isApiLoad = false;
+          _notifySafely();
+        } else if (selectedFirstColor == "Purple") {
+          colors = value.colors
+              ?.where((element) =>
+                  element == "ar21" || element == "ar66" || element == "ar75")
+              .toList();
+          isApiLoad = false;
+          _notifySafely();
+        } else if (selectedFirstColor == "Yellow") {
+          colors = value.colors
+              ?.where((element) =>
+                  element == "ar18" ||
+                  element == "ar7" ||
+                  element == "ar43" ||
+                  element == "ar81" ||
+                  element == "ar48" ||
+                  element == "ar90" ||
+                  element == "ar70" ||
+                  element == "ar106")
+              .toList();
+          isApiLoad = false;
+          _notifySafely();
+        } else if (selectedFirstColor == "Pink") {
+          colors = value.colors
+              ?.where((element) =>
+                  element == "ar16" ||
+                  element == "ar26" ||
+                  element == "ar36" ||
+                  element == "ar57" ||
+                  element == "ar67" ||
+                  element == "ar79")
+              .toList();
+          isApiLoad = false;
+          _notifySafely();
+        }
+      });
+    } else {
+      colors = countingUnitsByGenderAndFabric
+          ?.map((e) => e?.colorName)
+          .toList()
+          .toSet()
+          .toList();
+      isApiLoad = false;
+      _notifySafely();
+    }
 
     /// reset
     sizes = [];
@@ -232,11 +359,50 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     countingUnitsByGenderFabricAndColor = countingUnitsByGenderAndFabric
         ?.where((element) => element?.colorName == color)
         .toList();
-    sizes = countingUnitsByGenderFabricAndColor
-        ?.map((e) => e?.sizeName)
-        .toList()
-        .toSet()
-        .toList();
+
+    var maleSizeList = [
+      "xsm",
+      "smm",
+      "mem",
+      "lgm",
+      "xlm",
+      "xxlm",
+      "xxxlm",
+      "xxxxlm"
+    ];
+    var femaleSizeList = [
+      "xsf",
+      "smf",
+      "mef",
+      "lgf",
+      "xlf",
+      "xxlf",
+      "xxxlf",
+      "xxxxlf"
+    ];
+    if (selectedFabric == "familyarrow") {
+      if (selectedGender == "f") {
+        sizes = femaleSizeList;
+        _notifySafely();
+      } else if (selectedGender == "m") {
+        sizes = maleSizeList;
+        _notifySafely();
+      } else {
+        sizes = countingUnitsByGenderFabricAndColor
+            ?.map((e) => e?.sizeName)
+            .toList()
+            .toSet()
+            .toList();
+        _notifySafely();
+      }
+    } else {
+      sizes = countingUnitsByGenderFabricAndColor
+          ?.map((e) => e?.sizeName)
+          .toList()
+          .toSet()
+          .toList();
+      _notifySafely();
+    }
 
     /// reset
     selectedSize = null;
@@ -258,17 +424,46 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   void onChooseSize(String? size) {
     selectedSize = size;
     isSelectedSize = true;
-    selectedCountingUnits = countingUnitList
-        ?.where((element) =>
-            element?.genderName == selectedGender &&
-            element?.fabricName == selectedFabric &&
-            element?.colorName == selectedColor &&
-            element?.sizeName == selectedSize)
-        .toList();
-    selectedCountingUnits?.take(1);
-    selectedCountingUnit = selectedCountingUnits?.elementAt(0);
-    price = selectedCountingUnit?.orderPrice?.toString();
     _notifySafely();
+
+    if (selectedFabric == "familyarrow") {
+      if (size == "xsm" ||
+          size == "smm" ||
+          size == "mem" ||
+          size == "lgm" ||
+          size == "xsf" ||
+          size == "smf" ||
+          size == "mef" ||
+          size == "lgf") {
+        price = "22500";
+        _notifySafely();
+      } else if (size == "xlm" ||
+          size == "xxlm" ||
+          size == "xxxlm" ||
+          size == "xxxxlm" ||
+          size == "xlf" ||
+          size == "xxlf" ||
+          size == "xxxlf" ||
+          size == "xxxxlf") {
+        price = "25500";
+        _notifySafely();
+      } else {
+        price = "0";
+        _notifySafely();
+      }
+    } else {
+      selectedCountingUnits = countingUnitList
+          ?.where((element) =>
+              element?.genderName == selectedGender &&
+              element?.fabricName == selectedFabric &&
+              element?.colorName == selectedColor &&
+              element?.sizeName == selectedSize)
+          .toList();
+      selectedCountingUnits?.take(1);
+      selectedCountingUnit = selectedCountingUnits?.elementAt(0);
+      price = selectedCountingUnit?.orderPrice?.toString();
+      _notifySafely();
+    }
     _allowAddButton();
   }
 
@@ -308,6 +503,11 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
 
   void onTapFabric(int index) {
     selectedFabricIndex = index;
+    _notifySafely();
+  }
+
+  void onTapFirstColor(int index) {
+    selectedFirstColorIndex = index;
     _notifySafely();
   }
 

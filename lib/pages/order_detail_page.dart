@@ -61,12 +61,11 @@ class OrderDetailPage extends StatelessWidget {
                       children: [
                         DetailVoucherRowView(
                           title: VOUCHER_NO,
-                          value:
-                              bloc.response?.order?.id?.toString() ?? "-",
+                          value: bloc.response?.order?.id?.toString() ?? "-",
                         ),
                         DetailVoucherRowView(
                           title: CUSTOMER_NAME,
-                          value: bloc.response?.order?.customerName ??"-",
+                          value: bloc.response?.order?.customerName ?? "-",
                         ),
                         DetailVoucherRowView(
                           title: ORDER_PHONE,
@@ -74,8 +73,7 @@ class OrderDetailPage extends StatelessWidget {
                         ),
                         DetailVoucherRowView(
                           title: ORDER_ADDRESS,
-                          value:
-                              bloc.response?.order?.deliverAddress ?? "-",
+                          value: bloc.response?.order?.deliverAddress ?? "-",
                         ),
                         DetailVoucherRowView(
                           title: ORDER_DATE,
@@ -105,12 +103,11 @@ class OrderDetailPage extends StatelessWidget {
                         ),
                         DetailVoucherRowView(
                           title: PAYMENT_TYPE,
-                          value: bloc.response?.order?.paymentType ??"-",
+                          value: bloc.response?.order?.paymentType ?? "-",
                         ),
                         DetailVoucherRowView(
                           title: PAYMENT_CHANNEL,
-                          value:
-                              bloc.response?.order?.paymentChannel ?? "-",
+                          value: bloc.response?.order?.paymentChannel ?? "-",
                         ),
                         DetailVoucherRowView(
                           title: ORDER_STATUS,
@@ -129,12 +126,12 @@ class OrderDetailPage extends StatelessWidget {
                         (bloc.response?.order?.attachFlag == 0)
                             ? OrderListView(
                                 response: bloc.response,
-                                rowOneColor: Colors.black12,
-                                rowTwoColor: Colors.black26,
-                                rowThreeColor: Colors.black12,
-                                rowFourColor: Colors.black26,
-                                rowFiveColor: Colors.black12,
-                                rowSixColor: Colors.black26,
+                                // rowOneColor: Colors.black12,
+                                // rowTwoColor: Colors.black26,
+                                // rowThreeColor: Colors.black12,
+                                // rowFourColor: Colors.black26,
+                                // rowFiveColor: Colors.black12,
+                                // rowSixColor: Colors.black26,
                               )
                             : AttachOrderItemListView(
                                 response: bloc.response,
@@ -247,7 +244,7 @@ class OrderWithAttachItemView extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: scaleWidth(context) / 30),
+          SizedBox(width: scaleWidth(context) / 10),
           CartTextTwoColumnView(
             lineColorOne: lineOneColor,
             lineColorTwo: lineTwoColor,
@@ -430,7 +427,7 @@ class DetailVoucherRowView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: rowColor,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       child: Row(
         children: [
           Expanded(

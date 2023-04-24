@@ -82,7 +82,6 @@ class InStockOrderSpecificationPageBloc extends ChangeNotifier {
     });
   }
 
-
   void onChooseGender(String? gender) {
     selectedGender = gender;
     isSelectedGender = true;

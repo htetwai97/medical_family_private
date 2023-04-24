@@ -32,7 +32,25 @@ class ProductLinePageBloc extends ChangeNotifier {
     model
         .getItemsAndSubCategoriesByCategory(categoryId ?? "1")
         .then((response) {
+      List<String> frontItems = [
+        'medicalscrubs3',
+        'medicalscrub2',
+        'medicalscrubs1',
+      ];
+      int customCompare(SubCategoryVO? a, SubCategoryVO? b) {
+        if (frontItems.contains(a?.name) && frontItems.contains(b?.name)) {
+          return subcategoryList!.indexOf(a) - subcategoryList!.indexOf(b);
+        } else if (frontItems.contains(a?.name)) {
+          return -1;
+        } else if (frontItems.contains(b?.name)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+
       subcategoryList = response.subs;
+      subcategoryList?.sort(customCompare);
       _notifySafely();
       if (searchItem == null) {
         itemList = response.items;
