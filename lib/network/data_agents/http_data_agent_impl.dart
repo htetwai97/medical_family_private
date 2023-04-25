@@ -106,11 +106,13 @@ class HttpDataAgentImpl {
     }
   }
 
-  Future<GetColorsForFamilyArrowResponse> getColorsForFamilyArrow(String itemName) async {
+  Future<GetColorsForFamilyArrowResponse> getColorsForFamilyArrow(
+      String itemName) async {
     final response = await http
-        .get(Uri.parse("$BASE_URL$END_POINT_ECOMMERCE_ORDER$itemName"));
+        .get(Uri.parse("$BASE_URL$END_POINT_ECOMMERCE_ORDER_COLOR$itemName"));
     if (response.statusCode == 200) {
-      return GetColorsForFamilyArrowResponse.fromJson(jsonDecode(response.body));
+      return GetColorsForFamilyArrowResponse.fromJson(
+          jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }

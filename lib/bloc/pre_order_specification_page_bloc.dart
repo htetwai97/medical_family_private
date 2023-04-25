@@ -227,12 +227,15 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     firstColors = [];
     isApiLoad = true;
     _notifySafely();
-    model.getColorsForFamilyArrow(selectedFabric ?? "").then((value) {
+    model.getColorsForFamilyArrow("$selectedFabric/1").then((value) {
       colorObjectList = value.colorObjects;
-          // ?.where((element) => element!.colorName!.startsWith("ar"))
-          // .toList();
       firstColors = colorObjectList
-          ?.map((e) => e?.colorDescription)
+          ?.map(
+            (e) => e?.colorDescription
+                ?.toLowerCase()
+                .replaceAll(" ", "")
+                .replaceAll("-", ""),
+          )
           .toList()
           .toSet()
           .toList();
@@ -269,15 +272,32 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
     _notifySafely();
     if (selectedFabric == "familyarrow") {
       List<ColorForFamilyArrowVO?>? list = colorObjectList
-          ?.where((element) => element?.colorDescription == selectedFirstColor)
+          ?.where((element) =>
+              element?.colorDescription
+                  ?.toLowerCase()
+                  .replaceAll(" ", "")
+                  .replaceAll("-", "") ==
+              selectedFirstColor)
           .toList();
 
-      colors = list?.map((e) => e?.colorName).toList();
+      colors = list
+          ?.map(
+            (e) => e?.colorName
+                ?.toLowerCase()
+                .replaceAll(" ", "")
+                .replaceAll("-", ""),
+          )
+          .toList();
       isApiLoad = false;
       _notifySafely();
     } else {
       colors = countingUnitsByGenderAndFabric
-          ?.map((e) => e?.colorName)
+          ?.map(
+            (e) => e?.colorName
+                ?.toLowerCase()
+                .replaceAll(" ", "")
+                .replaceAll("-", ""),
+          )
           .toList()
           .toSet()
           .toList();
@@ -421,9 +441,12 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   }
 
   void onChangeQuantity(String? quantity) {
-    this.quantity = quantity;
-    _notifySafely();
-    _allowAddButton();
+    int q = int.parse(quantity ?? "");
+    if (q >= 30) {
+      this.quantity = quantity;
+      _notifySafely();
+      _allowAddButton();
+    }
   }
 
   void onChangePrice(String? price) {

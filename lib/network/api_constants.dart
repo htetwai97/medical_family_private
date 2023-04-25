@@ -13,6 +13,7 @@ const String END_POINT_PROMOTION_ITEMS = "promotionitem_api";
 const String END_POINT_ITEMS_BY_ID = "unitbyid_api/";
 const String END_POINT_RELATED_ITEM = "productlineitems_api";
 const String END_POINT_ECOMMERCE_ORDER = "ecommerce_order_type/";
+const String END_POINT_ECOMMERCE_ORDER_COLOR = "ecommerce_order_type_color/";
 const String END_POINT_SEARCH_ITEM = "searchitem";
 const String END_POINT_TOWNSHIPS = "township";
 const String END_POINT_TOWNSHIP_CHARGES = "township_charges";
