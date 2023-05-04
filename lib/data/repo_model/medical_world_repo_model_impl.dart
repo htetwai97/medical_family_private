@@ -8,6 +8,7 @@ import 'package:medical_family_app/data/vo_models/color_vo.dart';
 import 'package:medical_family_app/data/vo_models/counting_unit_instock_order_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/design_by_brand_id_vo.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/fabric_vo.dart';
 import 'package:medical_family_app/data/vo_models/gender_vo.dart';
 import 'package:medical_family_app/data/vo_models/instock_order_object_vo.dart';
@@ -133,7 +134,7 @@ class MedicalWorldRepoModelImpl extends MedicalWorldRepoModel {
   }
 
   @override
-  Future<DesignByBrandIdVO> getDesign(String brandId) {
+  Future<List<DesignObjectVO>> getDesign(String brandId) {
     return httpDataAgent.getDesign(brandId);
   }
 

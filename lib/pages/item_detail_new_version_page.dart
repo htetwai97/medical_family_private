@@ -551,7 +551,8 @@ class SelectableItemDetailView extends StatelessWidget {
     } else if (itemName == "ar43" || itemName == "4925ar43") {
       color = const Color(0xffF3E124);
     } else if (itemName == "ar44" || itemName == "4925ar44") {
-      color = const Color(0xff008694);
+      //color = const Color(0xff008694);
+      color = const Color.fromRGBO(22, 115, 148, 1);
     } else if (itemName == "ar48" || itemName == "4925ar48") {
       color = const Color(0xff8F803A);
     } else if (itemName == "ar57" || itemName == "4925ar57") {
@@ -583,9 +584,18 @@ class SelectableItemDetailView extends StatelessWidget {
     } else if (itemName == "ar98" || itemName == "4925ar98") {
       color = const Color(0xff026D80);
     } else if (itemName == "ar101" || itemName == "4925ar101") {
-      color = const Color(0xff00A7B6);
+      //color = const Color(0xff00A7B6);
+      color = const Color.fromRGBO(60, 145, 172, 1);
     } else if (itemName == "ar106" || itemName == "4925ar106") {
       color = const Color(0xff4C4C4C);
+    } else if (itemName == "ar89" || itemName == "4925ar89") {
+      color = const Color.fromRGBO(20, 22, 34, 1);
+    } else if (itemName == "4925ar23") {
+      color = const Color.fromRGBO(26, 34, 81, 1);
+    } else if (itemName == "ar23") {
+      color = const Color.fromRGBO(151, 160, 117, 1);
+    } else if (itemName == "ar8") {
+      color = const Color.fromRGBO(127, 131, 132, 1);
     } else {
       color = Colors.transparent;
     }

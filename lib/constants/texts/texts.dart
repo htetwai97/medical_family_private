@@ -1,3 +1,5 @@
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
+
 const String SEARCH_TEXT = "search in family";
 const String TAB_BRAND = "Brands";
 const String TAB_PRODUCTS = "Products";
@@ -49,6 +51,6 @@ const String ORDER_STATUS = "Order Status";
 const String SHOP_ADDRESS =
     "No.28, 3rd Street, Hlaing Yadanar Mon Avenue, Hlaing Township, Yangon 09 777 00 5861, 09 777 00 5862";
 
-List<dynamic>? designListOne = [];
-List<dynamic>? designListTwo = [];
-List<dynamic>? designListThree = [];
+List<DesignObjectVO?>? designListOne = [];
+List<DesignObjectVO?>? designListTwo = [];
+List<DesignObjectVO?>? designListThree = [];

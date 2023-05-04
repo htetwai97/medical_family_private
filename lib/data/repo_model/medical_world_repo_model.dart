@@ -8,6 +8,7 @@ import 'package:medical_family_app/data/vo_models/color_for_family_arrow_vo.dart
 import 'package:medical_family_app/data/vo_models/color_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/design_by_brand_id_vo.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/fabric_vo.dart';
 import 'package:medical_family_app/data/vo_models/gender_vo.dart';
 import 'package:medical_family_app/data/vo_models/instock_order_object_vo.dart';
@@ -52,7 +53,7 @@ abstract class MedicalWorldRepoModel {
   Future<ColorVO> getColor(String itemName, String gender, String fabric);
   Future<SizeVO> getSize(
       String itemName, String gender, String fabric, String color);
-  Future<DesignByBrandIdVO> getDesign(String brandId);
+  Future<List<DesignObjectVO>> getDesign(String brandId);
   Future<String> getUserInfoString(String key);
   Future<GetItemsAndSubCategoriesByCategoryResponse>
       getItemsAndSubCategoriesByCategory(String categoryId);

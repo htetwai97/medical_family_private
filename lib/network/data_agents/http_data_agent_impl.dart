@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:medical_family_app/data/vo_models/both_order_response_vo.dart';
 import 'package:medical_family_app/data/vo_models/color_vo.dart';
 import 'package:medical_family_app/data/vo_models/design_by_brand_id_vo.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/fabric_vo.dart';
 import 'package:medical_family_app/data/vo_models/gender_vo.dart';
 import 'package:medical_family_app/data/vo_models/item_vo.dart';
@@ -86,11 +87,18 @@ class HttpDataAgentImpl {
     }
   }
 
-  Future<DesignByBrandIdVO> getDesign(String brandId) async {
+  Future<List<DesignObjectVO>> getDesign(String brandId) async {
     final response =
         await http.get(Uri.parse("$BASE_URL$END_POINT_DESIGN_API/$brandId"));
     if (response.statusCode == 200) {
-      return DesignByBrandIdVO.fromJson(jsonDecode(response.body));
+      final responseData =
+          json.decode(response.body)['design'] as Map<String, dynamic>;
+      final values = responseData.values.toList();
+      final List<DesignObjectVO> designs = values
+          .map((dynamic item) =>
+              DesignObjectVO.fromJson(item as Map<String, dynamic>))
+          .toList();
+      return designs;
     } else {
       throw Exception('Failed to load response');
     }

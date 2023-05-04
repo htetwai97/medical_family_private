@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:medical_family_app/constants/texts/texts.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model.dart';
@@ -6,6 +7,7 @@ import 'package:medical_family_app/data/repo_model/medical_world_repo_model_impl
 import 'package:medical_family_app/data/vo_models/color_for_family_arrow_vo.dart';
 import 'package:medical_family_app/data/vo_models/counting_unit_id_vo.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_item_vo.dart';
 
@@ -18,6 +20,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
 
   /// App State
   bool isLoading = false;
+  List<DesignObjectVO?>? designObjectList = [];
   List<dynamic>? designs = [];
   List<dynamic>? genders = [];
   List<dynamic>? fabrics = [];
@@ -81,7 +84,7 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   bool autoFocusDescription = false;
 
   PreOrderSpecificationPageBloc(
-      List<dynamic>? designList, List<ItemVO?>? itemDemos) {
+      List<DesignObjectVO?>? designList, List<ItemVO?>? itemDemos) {
     _showLoading();
 
     model.getUserInfoString(USER_ID).then((userId) {
@@ -98,7 +101,8 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
         customPreOrderList =
             event?.where((element) => element?.userId == userId).toList();
         itemDemoList = itemDemos;
-        designs = designList;
+        designObjectList = designList;
+        designs = designList?.map((e) => e?.designName).toList();
         _notifySafely();
         _allowNextButton();
         _hideLoading();
@@ -397,47 +401,48 @@ class PreOrderSpecificationPageBloc extends ChangeNotifier {
   void onChooseSize(String? size) {
     selectedSize = size;
     isSelectedSize = true;
+    var list = designObjectList
+        ?.where((element) => element?.designName == selectedDesign)
+        .toList();
+    list?.take(1);
+    var designObj = list?.elementAt(0);
     _notifySafely();
-
-    if (selectedFabric == "familyarrow") {
-      if (size == "xsm" ||
-          size == "smm" ||
-          size == "mem" ||
-          size == "lgm" ||
-          size == "xsf" ||
-          size == "smf" ||
-          size == "mef" ||
-          size == "lgf") {
-        price = "22500";
-        _notifySafely();
-      } else if (size == "xlm" ||
-          size == "xxlm" ||
-          size == "xxxlm" ||
-          size == "xxxxlm" ||
-          size == "xlf" ||
-          size == "xxlf" ||
-          size == "xxxlf" ||
-          size == "xxxxlf") {
-        price = "25500";
-        _notifySafely();
-      } else {
-        price = "0";
-        _notifySafely();
-      }
+    if (size == "xsm" ||
+        size == "smm" ||
+        size == "mem" ||
+        size == "xsf" ||
+        size == "smf" ||
+        size == "mef" && designObj?.normalSizePrice != null) {
+      price = designObj?.normalSizePrice.toString();
+      _notifySafely();
+    } else if (size == "lgm" ||
+        size == "xlm" ||
+        size == "xxlm" ||
+        size == "xxxlm" ||
+        size == "xxxxlm" ||
+        size == "lgf" ||
+        size == "xlf" ||
+        size == "xxlf" ||
+        size == "xxxlf" ||
+        size == "xxxxlf" && designObj?.plusSizePrice != null) {
+      price = designObj?.plusSizePrice.toString();
+      _notifySafely();
     } else {
-      selectedCountingUnits = countingUnitList
-          ?.where((element) =>
-              element?.genderName == selectedGender &&
-              element?.fabricName == selectedFabric &&
-              element?.colorName == selectedColor &&
-              element?.sizeName == selectedSize)
-          .toList();
-      selectedCountingUnits?.take(1);
-      selectedCountingUnit = selectedCountingUnits?.elementAt(0);
-      price = selectedCountingUnit?.orderPrice?.toString();
+      price = "0";
       _notifySafely();
     }
     _allowAddButton();
+    // selectedCountingUnits = countingUnitList
+    //     ?.where((element) =>
+    // element?.genderName == selectedGender &&
+    //     element?.fabricName == selectedFabric &&
+    //     element?.colorName == selectedColor &&
+    //     element?.sizeName == selectedSize)
+    //     .toList();
+    // selectedCountingUnits?.take(1);
+    // selectedCountingUnit = selectedCountingUnits?.elementAt(0);
+    // price = selectedCountingUnit?.orderPrice?.toString();
+    // _notifySafely();
   }
 
   void onChangeQuantity(String? quantity) {

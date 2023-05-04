@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_family_app/constants/texts/texts.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model.dart';
 import 'package:medical_family_app/data/repo_model/medical_world_repo_model_impl.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/pages/bottom_navigation_page.dart';
 import 'package:medical_family_app/pages/login_page.dart';
 
@@ -32,17 +33,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
       model.getDesign("1").then((value) {
         setState(() {
-          designListOne = value.designs?.values.toList();
+          designListOne = value;
         });
 
         model.getDesign("2").then((value) {
           setState(() {
-            designListTwo = value.designs?.values.toList();
+            designListTwo = value;
           });
 
           model.getDesign("3").then((value) {
             setState(() {
-              designListThree = value.designs?.values.toList();
+              designListThree = value;
             });
 
             if (isLogin == true) {
@@ -51,8 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   designListTwo != null &&
                   designListTwo!.isNotEmpty &&
                   designListThree != null &&
-                  designListThree!.isNotEmpty
-              ) {
+                  designListThree!.isNotEmpty) {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

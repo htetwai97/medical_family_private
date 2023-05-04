@@ -12,6 +12,9 @@ class ColorForFamilyArrowVO {
   @JsonKey(name: "colour_description")
   String? colorDescription;
 
+  @JsonKey(name: "color_hex_code")
+  String? colorHexCode;
+
   @JsonKey(name: "fabric")
   dynamic fabric;
 
@@ -19,6 +22,7 @@ class ColorForFamilyArrowVO {
     this.id,
     this.colorName,
     this.colorDescription,
+    this.colorHexCode,
     this.fabric,
   });
 

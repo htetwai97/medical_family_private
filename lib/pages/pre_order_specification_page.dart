@@ -9,6 +9,7 @@ import 'package:medical_family_app/constants/colors/colors.dart';
 import 'package:medical_family_app/constants/scale/font_sizes.dart';
 import 'package:medical_family_app/constants/scale/scale_dimension.dart';
 import 'package:medical_family_app/data/vo_models/custom_pre_order_item_vo.dart';
+import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_item_vo.dart';
 import 'package:medical_family_app/data/vo_models/pre_order_vo.dart';
@@ -25,7 +26,7 @@ import 'package:provider/provider.dart';
 
 class PreOrderSpecificationPage extends StatelessWidget {
   PreOrderVO? brand;
-  List<dynamic>? designList;
+  List<DesignObjectVO?>? designList;
   List<ItemVO?>? itemDemos;
   PreOrderSpecificationPage({
     Key? key,
