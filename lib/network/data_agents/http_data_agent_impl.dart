@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:medical_family_app/data/vo_models/both_order_response_vo.dart';
 import 'package:medical_family_app/data/vo_models/color_vo.dart';
-import 'package:medical_family_app/data/vo_models/design_by_brand_id_vo.dart';
 import 'package:medical_family_app/data/vo_models/design_object_vo.dart';
 import 'package:medical_family_app/data/vo_models/fabric_vo.dart';
 import 'package:medical_family_app/data/vo_models/gender_vo.dart';

@@ -27,7 +27,7 @@ ItemVO _$ItemVOFromJson(Map<String, dynamic> json) => ItemVO(
       newProductFlag: json['new_product_flag'] as int?,
       promotionProductFlag: json['promotion_product_flag'] as int?,
       hotSaleFlag: json['hot_sale_flag'] as int?,
-      relatedItemId: json['related_item_id'] as int?,
+      relatedItemId: json['related_item_id'] as String?,
     );
 
 Map<String, dynamic> _$ItemVOToJson(ItemVO instance) => <String, dynamic>{

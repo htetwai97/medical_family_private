@@ -64,7 +64,7 @@ class ItemVO {
   int? hotSaleFlag;
 
   @JsonKey(name: "related_item_id")
-  int? relatedItemId;
+  String? relatedItemId;
 
   ItemVO({
     this.id,
